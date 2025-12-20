@@ -14,7 +14,8 @@ CONFIG -= qt
 PRJMODULE1  = EosStoreMobile
 DEFINES += "EOSSTOREMOBILE_API=__declspec(dllexport)"
 #
-INCLUDEPATH += ../Intermediate/Build/Win64/UnrealEditor/Inc/$$PRJMODULE1/UHT
+#INCLUDEPATH += ../Intermediate/Build/Win64/UnrealEditor/Inc/$$PRJMODULE1/UHT
+INCLUDEPATH += ../Intermediate/Build/Mac/UnrealEditor/Inc/$$PRJMODULE1/UHT
 INCLUDEPATH += $$PRJMODULE1 $$PRJMODULE1/Public $$PRJMODULE1/Private
 #### Module 2
 # PRJMODULE2  = StrategyGameLoadingScreen
@@ -71,13 +72,17 @@ PLUGINSROOT = ../Plugins
 
 HEADERS += \
 	EosStoreMobile/EosStoreMobile.h \
+	EosStoreMobile/StoreEntitlement.h \
 	EosStoreMobile/StoreOffer.h \
+	EosStoreMobile/StoreOwnedItem.h \
 	EosStoreMobile/TootEosPC.h \
 	EosStoreMobile/TootLog.h
 
 SOURCES += \
 	EosStoreMobile/EosStoreMobile.cpp \
+	EosStoreMobile/StoreEntitlement.cpp \
 	EosStoreMobile/StoreOffer.cpp \
+	EosStoreMobile/StoreOwnedItem.cpp \
 	EosStoreMobile/TootEosPC.cpp \
 	EosStoreMobile/TootLog.cpp
 
