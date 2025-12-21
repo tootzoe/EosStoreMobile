@@ -22,7 +22,7 @@
 
 void ATootEosPC::QueryOffers()
 {
-    UE_LOG(LogTemp, Warning, TEXT("msg....%hs") , __func__);
+   OnQueryOffersComplete.Broadcast(false, TEXT("QueryOffers enter.... "));
 
     IOnlineSubsystem* tmpSubSys = Online::GetSubsystem(GetWorld());
     IOnlineIdentityPtr idPtr = tmpSubSys ? tmpSubSys->GetIdentityInterface() : nullptr;
@@ -78,7 +78,7 @@ void ATootEosPC::QueryOffers()
 
 void ATootEosPC::QueryEntitlements()
 {
-    UE_LOG(LogTemp, Warning, TEXT("msg....%hs") , __func__);
+    OnQueryEntitlementComplete.Broadcast(false, TEXT("Query Entitlements enter....") );
 
     IOnlineSubsystem* tmpOLSys  = Online::GetSubsystem(GetWorld());
     IOnlineIdentityPtr idPtr = tmpOLSys ? tmpOLSys->GetIdentityInterface() : nullptr;
@@ -113,7 +113,7 @@ void ATootEosPC::QueryEntitlements()
 
 void ATootEosPC::QueryReceipts(bool bRestoreReceipts)
 {
-    UE_LOG(LogTemp, Warning, TEXT("msg....%hs") , __func__);
+    OnQueryReceiptsComplete.Broadcast(false , TEXT("Query Receipts(query owning relationship) enter...."));
 
 
     IOnlineSubsystem* tmpOLSys  = Online::GetSubsystem(GetWorld());
@@ -158,15 +158,16 @@ void ATootEosPC::QueryReceipts(bool bRestoreReceipts)
                 }else{
 
                     UE_LOG(LogEosStoreMobile, Error, TEXT("Query receipts Failed, err: %s ....%hs") , *err.ToLogString() ,  __func__);
+
                 }
 
-                OnQueryOffersComplete.Broadcast(err.bSucceeded, err.ToLogString());
+                OnQueryReceiptsComplete.Broadcast(err.bSucceeded, err.ToLogString());
             } ));
         }else{
              UE_LOG(LogEosStoreMobile, Error, TEXT("Failed , Player logged out ....%hs") ,  __func__);
         }
     }else{
-         OnQueryOffersComplete.Broadcast(false,  TEXT("Identity and/or purchase interface invalid...."));
+         OnQueryReceiptsComplete.Broadcast(false,  TEXT("Identity and/or purchase interface invalid...."));
     }
 
 
@@ -176,7 +177,8 @@ void ATootEosPC::QueryReceipts(bool bRestoreReceipts)
 
 void ATootEosPC::CheckoutOffers(const TArray<UStoreOffer *> &OffersToCheckout)
 {
-    UE_LOG(LogTemp, Warning, TEXT("msg....%hs") , __func__);
+
+     OnCheckoutComplete.Broadcast(false , TEXT("Checkout Offers enter.... "));
 
     FPurchaseCheckoutRequest tmpCheckoutReq = {};
 
@@ -240,8 +242,6 @@ void ATootEosPC::BeginPlay()
 
    // AutoLogin();
 
-
-
 }
 
 void ATootEosPC::EndPlay(const EEndPlayReason::Type EndPlayReason)
@@ -275,16 +275,14 @@ void ATootEosPC::AutoLogin()
 
     if(tmpId.IsValid()){
 
-        UE_LOG(LogTemp, Warning, TEXT("msg..22222222..%hs") , __func__);
-
         FUniqueNetIdPtr localNetId = tmpId->GetUniquePlayerId(0);
         if(localNetId.IsValid() && tmpId->GetLoginStatus(0) == ELoginStatus::Type::LoggedIn){
             // do query here...........
-            QueryOffers();
-            QueryReceipts();
-            QueryEntitlements();
+            // QueryOffers();
+            // QueryReceipts();
+            // QueryEntitlements();
 
-            OnAutoLoginComplete.Broadcast(true, TEXT("Auto Login Successfully , query offers now........."));
+            OnAutoLoginComplete.Broadcast(true, TEXT("Auto Login Successfully , query offers Done........."));
             return;
         }
 
@@ -292,12 +290,8 @@ void ATootEosPC::AutoLogin()
                  FOnLoginCompleteDelegate:: CreateUObject(this, &ThisClass::HandleAutoLoginCompleted));
 
 
-
-
-
         if(tmpId->AutoLogin(0)){
-            UE_LOG(LogEosStoreMobile, Warning, TEXT("Identity Auto Login called successfully....%hs") , __func__);
-
+           // UE_LOG(LogEosStoreMobile, Warning, TEXT("Identity Auto Login called successfully....%hs") , __func__);
             OnAutoLoginComplete.Broadcast(true, TEXT("Identity Auto Login called successfully.........."));
         }else{
             UE_LOG(LogEosStoreMobile, Error, TEXT("Identity Auto Login called Failed....%hs") , __func__);
@@ -316,14 +310,16 @@ void ATootEosPC::AutoLogin()
 
 void ATootEosPC::HandleAutoLoginCompleted(int32 localPlayerNum, bool isSuccessful, const FUniqueNetId & userId, const FString & errorStr)
 {
+    OnAutoLoginComplete.Broadcast(false , FString::Printf( TEXT("%hs enter....") ,  __func__) );
+
     if(isSuccessful){
         UE_LOG(LogEosStoreMobile, Warning, TEXT("Auto Login Success , player: %s....%hs") ,* userId.ToString() , __func__);
         // query info here.........
-        QueryOffers();
-        QueryReceipts();
-        QueryEntitlements();
+        // QueryOffers();
+        // QueryReceipts();
+        // QueryEntitlements();
     }else{
-        UE_LOG(LogEosStoreMobile, Error, TEXT("Auto Login Failed , player: %s....%hs") ,* userId.ToString() , __func__);
+        UE_LOG(LogEosStoreMobile, Error, TEXT("Auto Login Failed , player: %s....   %hs") ,* userId.ToString() , __func__);
     }
 
     IOnlineSubsystem* tmpSubSys = Online::GetSubsystem(GetWorld());
@@ -378,7 +374,7 @@ void ATootEosPC::RedeemEntitlement(FString EntitlementId)
 
 void ATootEosPC::HandleQueryEntitlementCompleted(bool bWasSuccessful, const FUniqueNetId &UserId, const FString &Namespace, const FString &Error)
 {
-    UE_LOG(LogTemp, Warning, TEXT("msg....%hs") , __func__);
+      OnQueryEntitlementComplete.Broadcast(false , FString::Printf( TEXT("%hs enter....") ,  __func__) );
 
     (void)Namespace;
 
