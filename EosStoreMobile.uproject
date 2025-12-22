@@ -1,6 +1,6 @@
 {
 	"FileVersion": 3,
-	"EngineAssociation": "{EE90F1C1-4FD7-5BAC-EB91-4AAD237F54BE}",
+	"EngineAssociation": "{AB537E95-C64D-99C6-C4F9-3E8A9C56B052}",
 	"Category": "",
 	"Description": "",
 	"Modules": [
@@ -39,6 +39,10 @@
 		},
 		{
 			"Name": "CommonUI",
+			"Enabled": true
+		},
+		{
+		        "Name": "ModelViewViewModelPreview",
 			"Enabled": true
 		},
 		{

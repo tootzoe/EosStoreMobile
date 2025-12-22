@@ -14,8 +14,8 @@ CONFIG -= qt
 PRJMODULE1  = EosStoreMobile
 DEFINES += "EOSSTOREMOBILE_API=__declspec(dllexport)"
 #
-INCLUDEPATH += ../Intermediate/Build/Win64/UnrealEditor/Inc/$$PRJMODULE1/UHT
-#INCLUDEPATH += ../Intermediate/Build/Mac/UnrealEditor/Inc/$$PRJMODULE1/UHT
+#INCLUDEPATH += ../Intermediate/Build/Win64/UnrealEditor/Inc/$$PRJMODULE1/UHT
+INCLUDEPATH += ../Intermediate/Build/Mac/UnrealEditor/Inc/$$PRJMODULE1/UHT
 INCLUDEPATH += $$PRJMODULE1 $$PRJMODULE1/Public $$PRJMODULE1/Private
 #### Module 2
 # PRJMODULE2  = StrategyGameLoadingScreen
