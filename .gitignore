@@ -4,6 +4,7 @@
 .DS_Store
 .vsconfig
 Source/.qtcreator/
+*pro.user
 
 Binaries/
 Build/
