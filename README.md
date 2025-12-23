@@ -18,3 +18,10 @@ https://dev.epicgames.com/community/learning/courses/nek/unreal-engine-the-onlin
 
 https://github.com/user-attachments/assets/6ed58dd7-0af2-44a1-873a-4483a52479cf
 
+
+
+
+## Full video recording here:
+
+https://www.youtube.com/watch?v=sXGfXHfISnc&list=PLsm4snAKrhaFV10W6tHN4bRi_qZKgbJki&index=1
+
